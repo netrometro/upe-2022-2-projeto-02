@@ -10,10 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario() {
+model Usuario {
   id Int @id @default(autoincrement())
   email String @unique
   cordeis Cordel[]
+
+  @@map("usuarios")
 }
 
 model Cordel {
@@ -22,4 +24,6 @@ model Cordel {
   autor String
   usuario Usuario @relation(fields: [usuarioId], references: id)
   usuarioId Int
+
+  @@map("cordel")
 }
