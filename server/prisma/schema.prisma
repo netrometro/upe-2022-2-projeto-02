@@ -6,24 +6,25 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite" //Change to postgresql at the end
   url      = env("DATABASE_URL")
 }
 
 model Usuario {
-  id Int @id @default(autoincrement())
-  email String @unique
+  id      String   @id @default(uuid())
+  nome    String
+  email   String   @unique
+  senha   String
   cordeis Cordel[]
 
   @@map("usuarios")
 }
 
 model Cordel {
-  id Int @id @default(autoincrement())
-  titulo String @unique
-  autor String
-  usuario Usuario @relation(fields: [usuarioId], references: id)
-  usuarioId Int
+  id        Int     @id @default(autoincrement())
+  titulo    String  @unique
+  autor     Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String
 
-  @@map("cordel")
+  @@map("cordeis")
 }
