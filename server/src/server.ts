@@ -1,23 +1,13 @@
 import express from 'express';
-import { prisma } from './prisma';
+import CordelController from './controller/CordelController';
+import UsuarioController from './controller/UsuarioController';
 
 const app = express();
 
 app.use(express.json());
 
-app.post('/usuario', async (req, res) => {
-  const {nome, email, senha} = req.body;
-
-  const feedBack = await prisma.usuario.create({
-    data: {
-      nome,
-      email,
-      senha
-    }
-  })
-
-  return res.status(201).json({ data: feedBack });
-})
+app.use(UsuarioController);
+app.use(CordelController);
 
 app.listen(process.env.PORT || 3333, () => {
   console.log('HTTP server running!');
