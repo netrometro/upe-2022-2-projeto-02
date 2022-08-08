@@ -13,6 +13,23 @@ export const createCordel = async (req: Request, res: Response) => {
     return res.json(result)
 }
 
+export const updateCordel = async (req: Request, res: Response) => {
+    const { titulo, autor } = req.body
+    const result = await prisma.cordel.update({
+        where: {
+            id: +req.params.id
+        },
+        data: {
+            ...req.body
+        }
+    })
+    return res.json(result)
+    
+    const cordeis = await prisma.cordel.findMany()
+    console.log(cordeis)
+    return res.json(cordeis)
+}
+
 export const findAllCordeis = async (res: Response) => {
     const cordeis = await prisma.cordel.findMany()
     console.log(cordeis)
