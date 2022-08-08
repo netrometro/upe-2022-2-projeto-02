@@ -45,3 +45,20 @@ export const findCordelByTitulo = async (req: Request, res: Response) => {
     console.log(cordel)
     return res.json(cordel)
 }
+
+export const deleteCordelById = async (req: Request, res: Response) => {
+    const deleteCordel = await prisma.cordel.delete({
+        where : {
+            id: req.body.id
+        }
+    })
+
+    if (!deleteCordel) {
+        return res.status(404).json({
+            message: 'Cordel não encontrado'
+        })
+    }
+
+    console.log(deleteCordel)
+    return res.json(deleteCordel)
+}

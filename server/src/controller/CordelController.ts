@@ -1,5 +1,5 @@
 import express from 'express'
-import { createCordel, findAllCordeis, findCordelByTitulo, updateCordel } from '../services/CordelService'
+import { createCordel, findAllCordeis, findCordelByTitulo, updateCordel, deleteCordelById } from '../services/CordelService'
 
 const CordelController = express.Router()
 
@@ -25,8 +25,11 @@ CordelController.get('/cordel', (req, res) => {
     findCordelByTitulo(req, res)
 } )
 
-CordelController.put('cordeis/:id', async (req, res) => {
+CordelController.put('/cordeis/:id', async (req, res) => {
     updateCordel(req, res)
 })
 
+CordelController.delete('/cordeis', async (req, res) => {
+    deleteCordelById(req, res)
+})
 export default CordelController
