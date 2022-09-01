@@ -1,5 +1,5 @@
 import { prisma } from "../../prisma";
-import { UsuarioCreate, UsuarioDelete, UsuariosRepository } from "../usuarios-repository";
+import { UsuarioCreate, UsuarioDelete, UsuarioGet, UsuarioGetAll, UsuariosRepository } from "../usuarios-repository";
 
 export class PrismaUsuariosRepository implements UsuariosRepository {
     async create({nome, email, senha}: UsuarioCreate) {
@@ -18,5 +18,23 @@ export class PrismaUsuariosRepository implements UsuariosRepository {
                 id: id
             }
         })
-    }
+    };
+
+    async get({id, senha}: UsuarioGet) {
+        const result = await prisma.usuario.findUnique({
+            where : {
+                id: id
+            },
+            select: {
+                nome: true,
+                email: true,
+            }
+        })
+
+        return result;
+    };
+
+    async get_all(data: UsuarioGetAll) {
+        await prisma.usuario.findMany()
+    };
 }
